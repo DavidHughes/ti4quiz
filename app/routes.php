@@ -15,3 +15,12 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
+
+Route::get('meltdown-london/ti4-quiz', function()
+{
+	return View::make('meltdown/ti4quiz');
+});
+
+Route::post('meltdown-london/ti4-quiz/submit', function() {
+	return 'CONGRATULATIONS! YOU WIN! Probably. Someone should mark your answers.';
+});
