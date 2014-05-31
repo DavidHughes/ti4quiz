@@ -21,6 +21,25 @@ Route::get('meltdown-london/ti4-quiz', function()
 	return View::make('meltdown/ti4quiz');
 });
 
-Route::post('meltdown-london/ti4-quiz/submit', function() {
-	return 'CONGRATULATIONS! YOU WIN! Probably. Someone should mark your answers.';
+Route::post('meltdown-london/ti4-quiz/submit', function()
+{
+	$input = Input::all();
+
+	if ($input['ti3-victor'] === 'Alliance') {
+		return Redirect::to('meltdown-london/ti4-quiz/submitted/victory');
+	} else {
+		return Redirect::to('meltdown-london/ti4-quiz/submitted/defeat');
+	}
+});
+
+Route::get('meltdown-london/ti4-quiz/submitted/{result}', function($result)
+{
+	switch($result) {
+		case 'victory':
+			return 'You win!';
+		case 'defeat':
+			return 'You lose! (Good day, sir!)';
+		default:
+			return 'You aren\'t meant to be here!';
+	}
 });
