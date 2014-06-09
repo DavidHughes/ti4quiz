@@ -18,14 +18,15 @@ Route::get('/', function()
 
 Route::get('meltdown-london/ti4-quiz', function()
 {
-	return View::make('meltdown/ti4quiz');
+	$quiz = getQuiz();
+	return View::make('meltdown/ti4quiz', $quiz);
 });
 
 Route::post('meltdown-london/ti4-quiz/submit', function()
 {
 	$input = Input::all();
 
-	if ($input['ti3-victor'] === 'Alliance') {
+	if (areAnswersCorrect($input)) {
 		return Redirect::to('meltdown-london/ti4-quiz/submitted/victory');
 	} else {
 		return Redirect::to('meltdown-london/ti4-quiz/submitted/defeat');
@@ -43,3 +44,36 @@ Route::get('meltdown-london/ti4-quiz/submitted/{result}', function($result)
 			return 'You aren\'t meant to be here!';
 	}
 });
+
+function getQuiz() {
+	return array(
+		'quiz' => array(
+			array(
+				'html-name' => 'long-name',
+				'question' => 'Who is the longest named player in the Swedish team Alliance?',
+				'answers' => array('Akke', 'Loda', 'Admiral Bulldog'),
+			),
+			array(
+				'html-name' => 'easy-question',
+				'question' => 'Which is the correct answer',
+				'answers' => array('Not this one', 'The correct one'),
+			)
+		)
+	);
+}
+
+function areAnswersCorrect($input) {
+	$quiz = getQuiz()['quiz'];
+	$answers = array(
+		2, 1
+	);
+	$passed = true;
+
+	foreach ($answers as $key=>$answer) {
+		if ($quiz[$key]['answers'][$answer] !== $input[($quiz[$key]['html-name'])]) {
+			$passed = false;
+		}
+	}
+
+	return $passed;
+}
