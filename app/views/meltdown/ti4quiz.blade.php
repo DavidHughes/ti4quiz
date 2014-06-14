@@ -1,14 +1,36 @@
-<form method="POST" action="{{ url('meltdown-london/ti4-quiz/submit') }}" accept-charset="UTF-8">
+@extends('layouts.base')
 
-  <?php
-  foreach ($questions as $question) {
-    echo Form::label($question['html-name'], $question['question']);
+@section('title')
+Meltdown London TI4 Quiz
+@stop
 
-    foreach ($question['answers'] as $index=>$answer) {
-      echo Form::radio($question['html-name'], $answer) . $answer;
-    }
-  }
-  ?>
+@section('content')
+<form role="form" method="POST" action="{{ url('meltdown-london/ti4-quiz/submit') }}" accept-charset="UTF-8">
+  <fieldset class="quiz-fields">
+    <h1>Quiz</h1>
+    @foreach ($questions as $question)
+      <div class="form-group">
+        {{ Form::label($question['html-name'], $question['question']) }}
+
+        @foreach ($question['answers'] as $index=>$answer)
+        <div class="radio">
+          <label>
+          {{ Form::radio($question['html-name'], $answer, false) . $answer }}
+          </label>
+        </div>
+        @endforeach
+      </div>
+    @endforeach
+  </fieldset>
+
+  <fieldset class="contact-details">
+    <h1>Contact Details</h1>
+    <div class="form-group">
+      {{ Form::label('email', 'Email') }}
+      {{ Form::email('email') }}
+    </div>
+  </fieldset>
 
   {{ Form::submit('Done!') }}
 </form>
+@stop

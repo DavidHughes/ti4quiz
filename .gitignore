@@ -7,3 +7,6 @@ composer.lock
 .DS_Store
 Thumbs.db
 /apache-logs
+
+node_modules
+.sass-cache
