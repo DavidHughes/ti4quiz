@@ -1,7 +1,7 @@
 <form method="POST" action="{{ url('meltdown-london/ti4-quiz/submit') }}" accept-charset="UTF-8">
 
   <?php
-  foreach ($quiz as $question) {
+  foreach ($questions as $question) {
     echo Form::label($question['html-name'], $question['question']);
 
     foreach ($question['answers'] as $index=>$answer) {
