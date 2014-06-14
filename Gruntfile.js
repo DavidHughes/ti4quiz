@@ -7,8 +7,7 @@ module.exports = function (grunt) {
       banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
           '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
           '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
-          '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
-          ' Licensed <%= props.license %> */\n',
+          '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;*/\n',
       // Task configuration
       concat: {
           options: {
@@ -16,8 +15,10 @@ module.exports = function (grunt) {
               stripBanners: true
           },
           dist: {
-              src: ['lib/pubquiz.js'],
-              dest: 'dist/pubquiz.js'
+              src: ['public/js/src/namespace.js',
+                    'public/js/src/modules/*.js',
+                    'public/js/src/init.js'],
+              dest: 'public/js/quiz.js'
           }
       },
       uglify: {
@@ -26,7 +27,7 @@ module.exports = function (grunt) {
           },
           dist: {
               src: '<%= concat.dist.dest %>',
-              dest: 'dist/pubquiz.min.js'
+              dest: 'public/js/quiz.min.js'
           }
       },
       jshint: {
@@ -49,8 +50,8 @@ module.exports = function (grunt) {
           gruntfile: {
               src: 'gruntfile.js'
           },
-          lib_test: {
-              src: ['lib/**/*.js', 'test/**/*.js']
+          source: {
+              src: ['public/js/src/*.js', 'public/js/src/**/*.js']
           }
       },
       watch: {
@@ -58,15 +59,15 @@ module.exports = function (grunt) {
               files: '<%= jshint.gruntfile.src %>',
               tasks: ['jshint:gruntfile']
           },
-          lib_test: {
-              files: '<%= jshint.lib_test.src %>',
-              tasks: ['jshint:lib_test', 'qunit']
+          assets: {
+              files: ['<%= concat.dist.src %>', 'public/scss/theme.scss'],
+              tasks: ['default']
           }
       },
       sass: {
         theme: {
           files: {
-            'public/css/theme.css': 'public/scss/vendor/bootstrap.scss'
+            'public/css/theme.css': 'public/scss/theme.scss'
           },
           options: {
             style: 'compressed'
@@ -83,5 +84,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
 
     // Default task
-    grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
+    grunt.registerTask('default', ['jshint:source', 'concat', 'uglify', 'sass']);
 };

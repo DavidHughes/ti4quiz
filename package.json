@@ -1,6 +1,9 @@
 {
   "name": "pubquiz",
   "version": "0.0.0",
+  "author": {
+    "name": "David Hughes"
+  },
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.2",
