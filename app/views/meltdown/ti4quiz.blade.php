@@ -21,6 +21,7 @@ Meltdown London TI4 Quiz
         @endforeach
       </div>
     @endforeach
+    <button type="button" id="lock-answers" class="btn btn-primary">Lock my answers</button>
   </fieldset>
 
   <fieldset class="contact-details">
