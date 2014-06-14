@@ -6,7 +6,7 @@ Meltdown London TI4 Quiz
 
 @section('content')
 <form role="form" method="POST" action="{{ url('meltdown-london/ti4-quiz/submit') }}" accept-charset="UTF-8">
-  <fieldset class="quiz-fields">
+  <fieldset class="quiz">
     <h1>Quiz</h1>
     @foreach ($questions as $question)
       <div class="form-group">
